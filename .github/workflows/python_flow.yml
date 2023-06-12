@@ -28,7 +28,7 @@ jobs:
         run: python python/main.py
       
       - name: Package
-        run: pyinstaller -F python/main.py -n main-${{ runner.os }}-${{ runner.arch }}
+        run: pyinstaller -F python/main.py -n main-${{ runner.os }}-${{ runner.arch }}-${{ GITHUB_REF#refs/tags/ }}
 
       - name: List All Files
         run: python python/main.py
@@ -39,5 +39,5 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            main-${{ runner.os }}-${{ runner.arch }}
+            dist/main-${{ runner.os }}-${{ runner.arch }}-${{ GITHUB_REF#refs/tags/ }}
       
