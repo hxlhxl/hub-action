@@ -4,6 +4,7 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 
 jobs:
+  # build 这个任务会在 macos-11(python3.11) 和 ubuntu-20.04(python3.11) 上执行，一共2个任务
   build:
     strategy:
         matrix:
@@ -30,4 +31,10 @@ jobs:
 
       - name: List All Files
         run: python python/main.py
-        
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        # if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: main-${{ runner.os }}-${{ runner.arch }}
+      
