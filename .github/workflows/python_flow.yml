@@ -15,5 +15,16 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run python/main.py
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+        
+      - name: List All Files
         run: python python/main.py
+      
+      - name: Package
+        run: pyinstaller -F python/main.py -n main-${{ runner.os }}-${{ runner.arch }}
+
+      - name: List All Files
+        run: python python/main.py
+        
+        
