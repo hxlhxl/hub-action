@@ -3,8 +3,6 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 
 on: [push]
 
-permissions: read-all|write-all
-
 jobs:
   # build 这个任务会在 macos-11(python3.11) 和 ubuntu-20.04(python3.11) 上执行，一共2个任务
   build:
@@ -13,6 +11,7 @@ jobs:
           os: [macos-11, ubuntu-20.04]
           version: [3.11]
     runs-on: ${{ matrix.os }}
+    permissions: write-all
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
