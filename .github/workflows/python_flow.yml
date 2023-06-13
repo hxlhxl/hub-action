@@ -12,6 +12,8 @@ jobs:
           version: [3.11]
     runs-on: ${{ matrix.os }}
     permissions: write-all
+    env:
+      BIN_NAME: main-${{ runner.os }}-${{ runner.arch }}-${{ github.ref_name }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -28,7 +30,7 @@ jobs:
         run: python python/main.py
       
       - name: Package
-        run: pyinstaller -F python/main.py -n main-${{ runner.os }}-${{ runner.arch }}-${{ GITHUB_REF#refs/tags/ }}
+        run: pyinstaller -F python/main.py -n $BIN_NAME
 
       - name: List All Files
         run: python python/main.py
@@ -39,5 +41,5 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            dist/main-${{ runner.os }}-${{ runner.arch }}-${{ GITHUB_REF#refs/tags/ }}
+            dist/$BIN_NAME
       
