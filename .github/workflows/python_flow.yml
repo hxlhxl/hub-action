@@ -1,7 +1,11 @@
 name: Run on Push
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 
-on: [push]
+on:
+  push:
+    tags:
+      # taken from https://stackoverflow.com/a/61892639/5810739
+      - '*'           # Push events to every tag not containing
 
 jobs:
   # build 这个任务会在 macos-11(python3.11) 和 ubuntu-20.04(python3.11) 上执行，一共2个任务
@@ -43,5 +47,5 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            dist/$BIN_NAME
+            dist/main-${{ runner.os }}-${{ runner.arch }}-${{ github.ref_name }}
       
