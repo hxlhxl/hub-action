@@ -28,6 +28,17 @@ jobs:
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:hub-action
 
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.version }}
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: User Scripts - get and put
+        run: python get-put.py
+
       - name: Debugging with ssh
         uses: lhotari/action-upterm@v1
         with:
@@ -36,14 +47,6 @@ jobs:
           ## limits ssh access and adds the ssh public keys of the listed GitHub users
           limit-access-to-users: hxlhxl
 
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: ${{ matrix.version }}
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-        
       - name: List All Files
         run: python python/main.py
       
